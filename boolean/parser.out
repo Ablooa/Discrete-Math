@@ -1,0 +1,230 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression AND expression
+Rule 2     expression -> ( expression )
+Rule 3     expression -> clause
+Rule 4     clause -> unit IMPLIES unit
+Rule 5     clause -> unit OR unit
+Rule 6     clause -> unit
+Rule 7     unit -> NOT unit
+Rule 8     unit -> VARIABLE
+
+Terminals, with rules where they appear
+
+(                    : 2
+)                    : 2
+AND                  : 1
+IMPLIES              : 4
+NOT                  : 7
+OR                   : 5
+VARIABLE             : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+clause               : 3
+expression           : 1 1 2 0
+unit                 : 4 4 5 5 6 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . expression AND expression
+    (2) expression -> . ( expression )
+    (3) expression -> . clause
+    (4) clause -> . unit IMPLIES unit
+    (5) clause -> . unit OR unit
+    (6) clause -> . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    (               shift and go to state 2
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    expression                     shift and go to state 1
+    clause                         shift and go to state 3
+    unit                           shift and go to state 4
+
+state 1
+
+    (0) S' -> expression .
+    (1) expression -> expression . AND expression
+
+    AND             shift and go to state 7
+
+
+state 2
+
+    (2) expression -> ( . expression )
+    (1) expression -> . expression AND expression
+    (2) expression -> . ( expression )
+    (3) expression -> . clause
+    (4) clause -> . unit IMPLIES unit
+    (5) clause -> . unit OR unit
+    (6) clause -> . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    (               shift and go to state 2
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    expression                     shift and go to state 8
+    clause                         shift and go to state 3
+    unit                           shift and go to state 4
+
+state 3
+
+    (3) expression -> clause .
+
+    AND             reduce using rule 3 (expression -> clause .)
+    $end            reduce using rule 3 (expression -> clause .)
+    )               reduce using rule 3 (expression -> clause .)
+
+
+state 4
+
+    (4) clause -> unit . IMPLIES unit
+    (5) clause -> unit . OR unit
+    (6) clause -> unit .
+
+    IMPLIES         shift and go to state 9
+    OR              shift and go to state 10
+    AND             reduce using rule 6 (clause -> unit .)
+    $end            reduce using rule 6 (clause -> unit .)
+    )               reduce using rule 6 (clause -> unit .)
+
+
+state 5
+
+    (7) unit -> NOT . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    unit                           shift and go to state 11
+
+state 6
+
+    (8) unit -> VARIABLE .
+
+    IMPLIES         reduce using rule 8 (unit -> VARIABLE .)
+    OR              reduce using rule 8 (unit -> VARIABLE .)
+    AND             reduce using rule 8 (unit -> VARIABLE .)
+    $end            reduce using rule 8 (unit -> VARIABLE .)
+    )               reduce using rule 8 (unit -> VARIABLE .)
+
+
+state 7
+
+    (1) expression -> expression AND . expression
+    (1) expression -> . expression AND expression
+    (2) expression -> . ( expression )
+    (3) expression -> . clause
+    (4) clause -> . unit IMPLIES unit
+    (5) clause -> . unit OR unit
+    (6) clause -> . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    (               shift and go to state 2
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    expression                     shift and go to state 12
+    clause                         shift and go to state 3
+    unit                           shift and go to state 4
+
+state 8
+
+    (2) expression -> ( expression . )
+    (1) expression -> expression . AND expression
+
+    )               shift and go to state 13
+    AND             shift and go to state 7
+
+
+state 9
+
+    (4) clause -> unit IMPLIES . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    unit                           shift and go to state 14
+
+state 10
+
+    (5) clause -> unit OR . unit
+    (7) unit -> . NOT unit
+    (8) unit -> . VARIABLE
+
+    NOT             shift and go to state 5
+    VARIABLE        shift and go to state 6
+
+    unit                           shift and go to state 15
+
+state 11
+
+    (7) unit -> NOT unit .
+
+    IMPLIES         reduce using rule 7 (unit -> NOT unit .)
+    OR              reduce using rule 7 (unit -> NOT unit .)
+    AND             reduce using rule 7 (unit -> NOT unit .)
+    $end            reduce using rule 7 (unit -> NOT unit .)
+    )               reduce using rule 7 (unit -> NOT unit .)
+
+
+state 12
+
+    (1) expression -> expression AND expression .
+    (1) expression -> expression . AND expression
+
+  ! shift/reduce conflict for AND resolved as shift
+    $end            reduce using rule 1 (expression -> expression AND expression .)
+    )               reduce using rule 1 (expression -> expression AND expression .)
+    AND             shift and go to state 7
+
+  ! AND             [ reduce using rule 1 (expression -> expression AND expression .) ]
+
+
+state 13
+
+    (2) expression -> ( expression ) .
+
+    AND             reduce using rule 2 (expression -> ( expression ) .)
+    $end            reduce using rule 2 (expression -> ( expression ) .)
+    )               reduce using rule 2 (expression -> ( expression ) .)
+
+
+state 14
+
+    (4) clause -> unit IMPLIES unit .
+
+    AND             reduce using rule 4 (clause -> unit IMPLIES unit .)
+    $end            reduce using rule 4 (clause -> unit IMPLIES unit .)
+    )               reduce using rule 4 (clause -> unit IMPLIES unit .)
+
+
+state 15
+
+    (5) clause -> unit OR unit .
+
+    AND             reduce using rule 5 (clause -> unit OR unit .)
+    $end            reduce using rule 5 (clause -> unit OR unit .)
+    )               reduce using rule 5 (clause -> unit OR unit .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for AND in state 12 resolved as shift
